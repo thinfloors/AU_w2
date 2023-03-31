@@ -9,16 +9,17 @@ const serverUrl = "http://localhost:1225";
 // "Aldous Buxley"
 
 async function main() {
-    // TODO: how do we prove to the server we're on the nice list?
-    const name = "Gilbert Morar";
-    const index = niceList.findIndex((n) => n === name);
+    // To simulate success and failure, past either goodName or naughtyName in lines 15 and 22
+    const goodName = "Gilbert Morar";
+    const naughtyName = "Lucius Malfoy";
+    const index = niceList.findIndex((n) => n === goodName);
 
     const merkle = new MerkleTree(niceList);
     const root = merkle.getRoot();
     const proof = merkle.getProof(index);
 
     const { data: gift } = await axios.post(`${serverUrl}/gift`, {
-        name: name,
+        name: goodName,
         proof: proof,
     });
 
